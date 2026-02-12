@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CosmicEye</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="ce-app">
+    <header class="ce-header">
+      <div class="ce-header__left">
+        <h1 class="ce-header__title">CosmicEye</h1>
+        <span class="ce-status ce-status--offline" id="connStatus">Disconnected</span>
+      </div>
+      <div class="ce-header__right">
+        <label class="ce-toggle">
+          <input type="checkbox" id="toggleRouteReset">
+          <span class="ce-toggle__slider"></span>
+          <span class="ce-toggle__label">Clear on route</span>
+        </label>
+        <button class="ce-btn ce-btn--clear" id="btnClear">Clear</button>
+      </div>
+    </header>
+
+    <nav class="ce-tabs">
+      <button class="ce-tab ce-tab--active" data-tab="rdr">
+        RDR <span class="ce-tab__count" id="rdrCount">0</span>
+      </button>
+      <button class="ce-tab" data-tab="rt">
+        RT <span class="ce-tab__count" id="rtCount">0</span>
+      </button>
+    </nav>
+
+    <!-- RDR Tab -->
+    <div class="ce-tab-content ce-tab-content--active" id="tab-rdr">
+      <div class="ce-summary">
+        <div class="ce-summary__card">
+          <div class="ce-summary__value" id="rdrEndpoints">0</div>
+          <div class="ce-summary__label">Endpoints</div>
+        </div>
+        <div class="ce-summary__card">
+          <div class="ce-summary__value" id="rdrDuplicates">0</div>
+          <div class="ce-summary__label">Duplicates</div>
+        </div>
+        <div class="ce-summary__card">
+          <div class="ce-summary__value" id="rdrAvgDelta">—</div>
+          <div class="ce-summary__label">Avg Δ (ms)</div>
+        </div>
+        <div class="ce-summary__card">
+          <div class="ce-summary__value" id="rdrTopEndpoint">—</div>
+          <div class="ce-summary__label">Most frequent</div>
+        </div>
+      </div>
+      <div class="ce-list" id="rdrList"></div>
+    </div>
+
+    <!-- RT Tab -->
+    <div class="ce-tab-content" id="tab-rt">
+      <div class="ce-summary">
+        <div class="ce-summary__card">
+          <div class="ce-summary__value" id="rtTransitions">0</div>
+          <div class="ce-summary__label">Transitions</div>
+        </div>
+        <div class="ce-summary__card">
+          <div class="ce-summary__value" id="rtAvgRender">—</div>
+          <div class="ce-summary__label">Avg render (ms)</div>
+        </div>
+        <div class="ce-summary__card">
+          <div class="ce-summary__value" id="rtAvgTti">—</div>
+          <div class="ce-summary__label">Avg TTI (ms)</div>
+        </div>
+        <div class="ce-summary__card">
+          <div class="ce-summary__value" id="rtTimedOut">0</div>
+          <div class="ce-summary__label">Timed out</div>
+        </div>
+      </div>
+      <div class="ce-list" id="rtList"></div>
+    </div>
+
+    <!-- Detail overlay -->
+    <div class="ce-detail-overlay" id="detailOverlay">
+      <div class="ce-detail">
+        <div class="ce-detail__header">
+          <h2 class="ce-detail__title" id="detailTitle"></h2>
+          <div class="ce-detail__actions">
+            <button class="ce-btn ce-btn--ghost" id="btnCopyDetail">Copy</button>
+            <button class="ce-btn ce-btn--close" id="btnCloseDetail">✕</button>
+          </div>
+        </div>
+        <pre class="ce-detail__json" id="detailJson"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="panel.js"></script>
+</body>
+</html>
