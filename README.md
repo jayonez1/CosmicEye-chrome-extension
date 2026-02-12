@@ -30,10 +30,10 @@ initRT({
 
 ## Install (unpacked)
 
-1. Clone or download the `Chrome/` directory
+1. Clone or download this repository
 2. Open `chrome://extensions/`
 3. Enable **Developer mode** (top-right toggle)
-4. Click **Load unpacked** → select the `Chrome/` folder
+4. Click **Load unpacked** → select the repository root folder
 5. Open DevTools on any matching page → **CosmicEye** tab appears
 
 ## Features
@@ -79,7 +79,7 @@ if (ok) {
 ## File structure
 
 ```
-Chrome/
+.
 ├── manifest.json      # Extension manifest (MV3)
 ├── background.js      # Service worker — routes messages between panel & content
 ├── content.js         # Injected into pages — listens for rdr/rt CustomEvents
