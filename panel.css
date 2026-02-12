@@ -42,6 +42,28 @@ body {
   color: #e8eaed;
 }
 
+.ce-version {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #8ab4f8;
+  background: rgba(138, 180, 248, 0.14);
+  border: 1px solid rgba(138, 180, 248, 0.45);
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.ce-version:hover {
+  color: #aecbfa;
+  background: rgba(138, 180, 248, 0.24);
+  border-color: rgba(174, 203, 250, 0.7);
+}
+
 .ce-header__right {
   display: flex;
   align-items: center;
@@ -163,6 +185,10 @@ body {
   user-select: none;
 }
 
+.ce-toggle[hidden] {
+  display: none;
+}
+
 .ce-toggle input {
   display: none;
 }
@@ -249,6 +275,10 @@ body {
   padding: 8px 12px;
   border-bottom: 1px solid #3c3c3c;
   flex-shrink: 0;
+}
+
+.ce-summary--rt {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .ce-summary__card {

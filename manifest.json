@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CosmicEye",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "DevTools extension for CosmicEye — monitors duplicate API requests (RDR) and route transition metrics (RT)",
   "permissions": [],
   "icons": {},

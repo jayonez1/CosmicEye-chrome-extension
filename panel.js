@@ -13,8 +13,10 @@
   const $ = (id) => document.getElementById(id);
 
   const els = {
+    appVersion: $('appVersion'),
     connStatus: $('connStatus'),
     btnClear: $('btnClear'),
+    toggleRouteResetWrap: $('toggleRouteResetWrap'),
     toggleRouteReset: $('toggleRouteReset'),
     // RDR
     rdrCount: $('rdrCount'),
@@ -25,7 +27,6 @@
     rdrList: $('rdrList'),
     // RT
     rtCount: $('rtCount'),
-    rtTransitions: $('rtTransitions'),
     rtAvgRender: $('rtAvgRender'),
     rtAvgTti: $('rtAvgTti'),
     rtTimedOut: $('rtTimedOut'),
@@ -36,6 +37,22 @@
     detailJson: $('detailJson'),
     btnCopyDetail: $('btnCopyDetail'),
     btnCloseDetail: $('btnCloseDetail'),
+  };
+
+  const setExtensionVersion = () => {
+    if (!els.appVersion) return;
+
+    try {
+      const version = chrome.runtime?.getManifest?.().version;
+      if (version) {
+        els.appVersion.textContent = `v${version}`;
+        return;
+      }
+    } catch (_) {
+      // nothing
+    }
+
+    els.appVersion.textContent = 'v—';
   };
 
   const readRouteResetSetting = () => {
@@ -67,6 +84,8 @@
       els.toggleRouteReset.checked = storedRouteResetEnabled;
     }
   }
+
+  setExtensionVersion();
 
   // ─── Helpers ───
   const fmtMs = (ms) => {
@@ -174,7 +193,6 @@
   // ─── RT rendering ───
   const updateRtSummary = () => {
     els.rtCount.textContent = rtLogs.length;
-    els.rtTransitions.textContent = rtLogs.length;
 
     const rendered = rtLogs.filter((l) => l.routeRenderMs != null);
     const withTti = rtLogs.filter((l) => l.routeTtiMs != null);
@@ -259,25 +277,29 @@
   };
 
   // ─── Clear ───
+  const clearRdr = () => {
+    rdrLogs.length = 0;
+    updateRdrSummary();
+    renderRdrList();
+  };
+
+  const clearRt = () => {
+    rtLogs.length = 0;
+    updateRtSummary();
+    renderRtList();
+  };
+
   const clearAll = () => {
     if (activeTab === 'rdr') {
-      rdrLogs.length = 0;
-      updateRdrSummary();
-      renderRdrList();
+      clearRdr();
     } else {
-      rtLogs.length = 0;
-      updateRtSummary();
-      renderRtList();
+      clearRt();
     }
   };
 
   const clearBoth = () => {
-    rdrLogs.length = 0;
-    rtLogs.length = 0;
-    updateRdrSummary();
-    updateRtSummary();
-    renderRdrList();
-    renderRtList();
+    clearRdr();
+    clearRt();
   };
 
   // ─── Connection status ───
@@ -338,6 +360,10 @@
     document.querySelectorAll('.ce-tab-content').forEach((c) => {
       c.classList.toggle('ce-tab-content--active', c.id === 'tab-' + tabName);
     });
+
+    if (els.toggleRouteResetWrap) {
+      els.toggleRouteResetWrap.hidden = tabName !== 'rdr';
+    }
   };
 
   document.querySelectorAll('.ce-tab').forEach((tab) => {
@@ -373,10 +399,12 @@
       }
 
       // type='flush' — used here only as route-reset signal from app code
-      if (msg.type === 'flush' && routeResetEnabled && payload?.trigger === 'route-change') {
-        rdrLogs.length = 0;
-        updateRdrSummary();
-        renderRdrList();
+      if (
+        msg.type === 'flush'
+        && routeResetEnabled
+        && payload?.trigger === 'route-change'
+      ) {
+        clearRdr();
       }
       return;
     }
@@ -402,7 +430,7 @@
       updateRdrSummary();
     }
     if (msg.type === 'reset' && routeResetEnabled) {
-      clearBoth();
+      clearRdr();
     }
   };
 
@@ -448,6 +476,7 @@
   };
 
   connectPort();
+  switchTab(activeTab);
 
   // ─── Initial render ───
   updateRdrSummary();
@@ -457,8 +486,8 @@
 
   // ─── External API ───
   window.__COSMIC_EYE_PANEL__ = {
-    clearRdr: () => { rdrLogs.length = 0; updateRdrSummary(); renderRdrList(); },
-    clearRt: () => { rtLogs.length = 0; updateRtSummary(); renderRtList(); },
+    clearRdr,
+    clearRt,
     clearAll: clearBoth,
     getRdrLogs: () => rdrLogs.slice(),
     getRtLogs: () => rtLogs.slice(),

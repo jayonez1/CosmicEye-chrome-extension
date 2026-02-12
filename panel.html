@@ -10,10 +10,18 @@
     <header class="ce-header">
       <div class="ce-header__left">
         <h1 class="ce-header__title">CosmicEye</h1>
+        <a
+          class="ce-version"
+          id="appVersion"
+          href="https://github.com/jayonez1/CosmicEye-chrome-extension"
+          target="_blank"
+          rel="noreferrer noopener"
+          title="Open repository"
+        >v—</a>
         <span class="ce-status ce-status--offline" id="connStatus">Disconnected</span>
       </div>
       <div class="ce-header__right">
-        <label class="ce-toggle">
+        <label class="ce-toggle" id="toggleRouteResetWrap">
           <input type="checkbox" id="toggleRouteReset">
           <span class="ce-toggle__slider"></span>
           <span class="ce-toggle__label">Clear on route</span>
@@ -56,11 +64,7 @@
 
     <!-- RT Tab -->
     <div class="ce-tab-content" id="tab-rt">
-      <div class="ce-summary">
-        <div class="ce-summary__card">
-          <div class="ce-summary__value" id="rtTransitions">0</div>
-          <div class="ce-summary__label">Transitions</div>
-        </div>
+      <div class="ce-summary ce-summary--rt">
         <div class="ce-summary__card">
           <div class="ce-summary__value" id="rtAvgRender">—</div>
           <div class="ce-summary__label">Avg render (ms)</div>
