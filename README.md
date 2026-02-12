@@ -36,18 +36,6 @@ initRT({
 4. Click **Load unpacked** → select the repository root folder
 5. Open DevTools on any matching page → **CosmicEye** tab appears
 
-## Features
-
-| Feature | Description |
-|---------|-------------|
-| RDR tab | Live list of duplicate requests with delta, endpoint, action context |
-| RT tab | Route transitions with render time, TTI, timeout/abort badges |
-| Summary cards | Aggregate stats per tab (endpoints, avg delta, avg render, etc.) |
-| Detail overlay | Click any row to inspect full JSON payload, copy to clipboard |
-| Connection status | Green/red indicator showing extension ↔ page link |
-| Clear on route | Toggle to auto-clear RDR logs on `route-change` signals and full page reload |
-| Reconnect | Auto-reconnects if DevTools panel is reopened |
-
 ## Cookbook: Make `Clear on route` work
 
 `Clear on route` in DevTools panel reacts only to `rdr.flush()` with trigger `route-change`.
@@ -74,21 +62,6 @@ if (ok) {
     }
   });
 }
-```
-
-## File structure
-
-```
-.
-├── manifest.json      # Extension manifest (MV3)
-├── background.js      # Service worker — routes messages between panel & content
-├── content.js         # Injected into pages — listens for rdr/rt CustomEvents
-├── devtools.html      # DevTools entry point
-├── devtools.js        # Creates the CosmicEye panel
-├── panel.html         # Panel UI (two tabs)
-├── panel.js           # Panel logic (state, rendering, connection)
-├── panel.css          # Dark theme styles
-└── README.md
 ```
 
 ## License
